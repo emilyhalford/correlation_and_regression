@@ -1,0 +1,119 @@
+---
+title: "Analysis"
+author: "Emily Halford"
+date: "11/23/2020"
+output: html_document
+---
+
+Load the tidyverse and data file
+
+```{r setup}
+
+library(tidyverse)
+library(patchwork)
+
+data = readxl::read_xlsx("./data/scatterplot_data.xlsx")
+
+```
+
+## Scatterplots
+
+```{r scatterplots}
+
+## Negative relationships
+
+weak_neg = 
+  data %>% 
+  ggplot() + 
+  geom_point(aes(x = x_neg_weak, y = y_neg_weak),
+             color = "#09557f") +
+  theme_minimal() +
+  labs(
+    x = "X",
+    y = "Y",
+    title = "Weak Negative Relationship"
+  )
+
+strong_neg = 
+  data %>% 
+  ggplot() + 
+  geom_point(aes(x = x_neg_strong, y = y_neg_strong),
+             color = "#09557f") +
+  theme_minimal() +
+  labs(
+    x = "X",
+    y = "Y",
+    title = "Strong Negative Relationship"
+  )
+
+weak_neg + strong_neg
+
+## Positive Relationships
+
+weak_pos = 
+  data %>% 
+  ggplot() + 
+  geom_point(aes(x = x_pos_weak, y = y_pos_weak),
+             color = "#09557f") +
+  theme_minimal() +
+  labs(
+    x = "X",
+    y = "Y",
+    title = "Weak Positive Relationship"
+  )
+
+strong_pos = 
+  data %>% 
+  ggplot() + 
+  geom_point(aes(x = x_pos_strong, y = y_pos_strong),
+             color = "#09557f") +
+  theme_minimal() +
+  labs(
+    x = "X",
+    y = "Y",
+    title = "Strong Positive Relationship"
+  )
+
+weak_pos + strong_pos
+
+## Non-linear
+
+data %>% 
+  ggplot() + 
+  geom_point(aes(x = x_non_lin, y = y_non_lin),
+             color = "#09557f") +
+  theme_minimal() +
+  labs(
+    x = "X",
+    y = "Y",
+    title = "Non-Linear Relationship"
+  )
+
+
+
+```
+
+## Correlation
+
+```{r correlation}
+
+cor.test(data$x_pos_weak, data$y_pos_weak, method = "pearson")
+
+cor.test(data$x_pos_strong, data$y_pos_strong, method = "pearson")
+
+```
+
+## Regression
+
+```{r regression}
+
+weak = lm(y_pos_weak ~ x_pos_weak, data = data)
+
+summary(weak)
+
+strong = lm(y_pos_strong ~ x_pos_strong, data = data)
+
+summary(strong)
+
+```
+
