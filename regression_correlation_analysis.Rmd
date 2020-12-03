@@ -99,7 +99,11 @@ data %>%
 
 cor.test(data$x_pos_weak, data$y_pos_weak, method = "pearson")
 
+0.7798328^2
+
 cor.test(data$x_pos_strong, data$y_pos_strong, method = "pearson")
+
+0.9735973^2
 
 ```
 
